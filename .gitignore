@@ -1,0 +1,3 @@
+.lein*
+resources/public/js/main.js
+target
