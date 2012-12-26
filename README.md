@@ -1,6 +1,6 @@
 # cljs-base
 
-A bare bones Clojure+ClojureScript project for quick experiments with.
+A bare bones Clojure+ClojureScript project for quick prototypes.
 
 Just clone it and run:
 
