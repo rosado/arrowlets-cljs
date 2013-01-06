@@ -13,16 +13,22 @@
 
 (defn include-clojurescript
   [path]
+  (javascript-tag "var CLOSURE_NO_DEPS = true;")
   (include-js path))
 
 (defn index-page
   []
   (html5
    [:head
-    [:title "cljs-base"]
-    (include-clojurescript "/js/main.js")]
+    [:title "cljs-base"]]
    [:body
-    [:h1 "Hey, dude"]]))
+    [:h1 "Arrowlets"]
+    [:p "See the js console!"]
+    [:p#click-count "Click me"]
+    [:p#two-clicks "Two Clicks"]
+    [:p#different-two-clicks "Different Two Clicks"]
+    [:p [:span#heads "Heads"] [:span#tails "Tails"]]
+    (include-clojurescript "/js/main.js")]))
 
 (defroutes main-routes
   (GET "/" [] (#'index-page))
