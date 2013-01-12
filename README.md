@@ -5,6 +5,8 @@ attempting to make composing event-handlers easier. It is port (or
 rather, a draft of a port at this time) of the library described in the
 paper [Directing JavaScript with Arrows][paper]. 
 
+The project is in an early alpha stage, subject to change.
+
 # Goals
 
 Determine if Arrows will indeed make the code simpler and more
