@@ -1,6 +1,7 @@
 (defproject rosado.cljs-base "0.1.0"
   :description "A simple base project for ClojureScript experiments"
   :source-paths ["src-clj"]
+  :test-paths ["test-clj"]
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [hiccup "1.0.0"]
                  [ring "1.1.6"]
