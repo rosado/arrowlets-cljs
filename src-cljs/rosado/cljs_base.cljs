@@ -102,7 +102,7 @@
   (.log js/console (str "clicked both buttons")))
 
 (let [a1 (arrows/event-arrow "click") a2 (arrows/event-arrow "click")
-      prod (arrows/product1 a1 a2)]
+      prod (arrows/product a1 a2)]
   (arrows/run (arrows/next>> prod click-two-targets-arrow)
               [(dom/getElement "two-clicks") (dom/getElement "different-two-clicks")]))
 

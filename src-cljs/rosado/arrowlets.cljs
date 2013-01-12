@@ -193,7 +193,7 @@
                    :default
                    (throw (js/Error. "repeat? or done?")))))))))
 
-(defn product1
+(defn product
   [this other]
   (let [other (lift-async other)]
     (Async. (fn [x p k]
