@@ -172,10 +172,19 @@
 (defn make-done [x] {:done? true :value x})
 
 (defn repeat-arrow
+  "`repeat` arrow combinator.
+
+Creates an arrow which executes repeatedly by yielding to the
+execution thread via setTimeout() with given interval. Arrows passed
+as argument should use result of #'make-repeat and #'make-done as
+return value and accept it as argument. Map returned by #'make-done
+and #'make-repeat hold the actual value under :value.
+
+See the bubble sort example in rosado.cljs-base namespace."
   [o interval]
   (Async.
    (fn rep [x p k]
-     (let [cps (.-cps o)]
+     (let [cps (.-cps (lift-async o))]
        (cps x p (fn [y q]
                   (cond
                    (:repeat? y)
@@ -194,6 +203,9 @@
                    (throw (js/Error. "repeat? or done?")))))))))
 
 (defn product
+  "`product` combinator for Async arrow.
+
+The result is a two element vector."
   [this other]
   (let [other (lift-async other)]
     (Async. (fn [x p k]
@@ -212,6 +224,11 @@
                     (run (second x) p)))))))
 
 (defn or-arrow
+  "`or` combinator for Async arrws.
+
+Given two arrows, calling #'run on `or`-ed arrow will execute a1 or
+  a2, whichever is triggered first. The other arrow is cancelled."
+
   [a1 a2]
   (let [a2 (lift-async a2)]
     (Async. (fn [x p k]
@@ -236,15 +253,23 @@
                   ((.-cps a1) x @p1 join-cb)
                   ((.-cps a2) x @p2 join-cb)))))))
 
-(defn- id-arrow
+;;; two utility arrows
+
+(defn id-arrow
   []
   (lift-async (fn [f] f)))
 
-(defn- dup-arrow
+(defn dup-arrow
   []
   (lift-async (fn [f] [f f])))
 
 (defn bind-arrow
+  "`bind` combinator for Async arrows.
+
+First arrow becomes a trigger for the second arrrow. Result is a
+two element vector (like in #'product-arrow)."
   [a1 a2]
   (let [a2 (lift-async a2)]
-    (-> (dup-arrow) (next>> (product (id-arrow) a1)) (next>> a2))))
+    (-> (next>> (dup-arrow)
+                (product (id-arrow) a1))
+        (next>> a2))))

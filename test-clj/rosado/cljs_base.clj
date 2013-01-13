@@ -28,6 +28,7 @@
     [:p#two-clicks "Two Clicks"]
     [:p#different-two-clicks "Different Two Clicks"]
     [:p [:span#heads "Heads"] [:span#tails "Tails"]]
+    [:div#bindTest "bind test"]
     (include-clojurescript "/js/main.js")]))
 
 (defroutes main-routes

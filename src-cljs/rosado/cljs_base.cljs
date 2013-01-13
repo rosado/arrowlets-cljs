@@ -127,3 +127,17 @@
                       (arrows/next>> (write-arrow "You loose!"))))
  nil)
 
+(defn repeat-action
+  [t _]
+  (.log js/console (str "mouseover: " (vector? t)))
+  t)
+
+(let [elem (dom/getElement "bindTest")]
+  (-> (arrows/event-arrow "click")
+      (arrows/bind-arrow (fn foo [target ev] (js/alert (str ev)) target))
+      (arrows/run elem))
+  (-> (arrows/event-arrow "click")
+      (arrows/bind-arrow repeat-action)
+      (arrows/next>> #(arrows/make-repeat (first %)))
+      (arrows/repeat-arrow 0)
+      (arrows/run elem)))
